@@ -74,15 +74,29 @@
                 st++
                 if (st > 100000 && st < 300000) {
                     fireworks.start();
-                    document.getElementById("counter").innerHTML = "100К";
+                    document.getElementById("counter").innerHTML = "100K";
                     document.getElementById("counter").style.display = "block";
                 }
-                if (st > 300000) {
-                    st = 300000;
+                if (st > 300000 && st < 490000) {
                     document.getElementById("zizya").innerHTML = st;
                     fireworks._acceleration = 1000;
                     fireworks._delay.min = 1;
                     fireworks._delay.max = 1;
+                    fireworks.start();
+                    document.getElementById("counter").innerHTML = "300K";
+                    document.getElementById("counter").style.display = "block";
+                }
+                if (st > 490000 && st < 500000) {
+                    document.getElementById("counter").innerHTML = "Компу пизда. остановись!";
+                    document.getElementById("counter").style.display = "block";
+                }
+                if (st > 500000) {
+                    st = 500000;
+                    document.getElementById("zizya").innerHTML = st;
+                    fireworks._particleCount = 2500;
+                    fireworks._acceleration = 1000;
+                    fireworks._delay.max = 0;
+                    fireworks._delay.max = 0;
                     fireworks.start();
                     document.getElementById("counter").innerHTML = "Ура!";
                     document.getElementById("counter").style.display = "block";
