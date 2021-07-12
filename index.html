@@ -2,6 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <title>ZizyaPersons</title>
+        <script src="https://unpkg.com/fireworks-js@latest/dist/fireworks.js"></script>
         <style>
             body {
             -webkit-user-select: none;
@@ -17,9 +18,23 @@
             width: 100%;
             }
             
+            button {
+            background-color: rgb(0,128,0);
+            color: white;
+            padding: 5px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            }
+            
+            button:active {
+            background-color: rgb(0,100,0);
+            }
+            
             div {
             padding: 16px;
-            background-color: rgb(60,60,60);
+            background-color: rgb(60,60,60, 128);
             border-radius: 4px;
             margin: 0;
             position: absolute;
@@ -31,38 +46,62 @@
             }
         </style>
     </head>
-    <body>
-        <audio src="music.mp3" autoplay="true" loop="true"></audio>
+    <body id="body" scroll="no" style="overflow: hidden">
         <div>
+            <b id="counter" style="display: none;"></b>
             <a>Счётчик личностей Зизи: </a><a id="zizya">1</a><br>
+            <button id="hlp" onclick="help();">Помочь Зизе</button>
         </div>
-        <footer style="text-align: left;">
-            by <a href="https://youtube.com/c/VidTu" style="color: #FFFFFF;">VidTu</a>
-        </footer>
         <footer style="text-align: right;">
-            <a href="https://www.youtube.com/watch?v=7VX-XKz4pHM" style="color: #FFFFFF;">Music</a> (<a href="javascript:showCopyright()" style="color: #FFFFFF;">Copyright?</a>)
+            by <a href="https://youtube.com/c/VidTu" target="_blank" style="color: #FFFFFF;">VidTu</a>.<br>
+            Used <a href="https://crashmax-dev.github.io/fireworks-js/" target="_blank" style="text-align: right; color: #FFFFFF;">fireworks.js</a> library.
         </footer>
         <script>
-            let i = 0;
-            slow();
-            function slow() {
-                if (i > 21) {
-                    fast();
+            const cont = document.getElementById("body");
+            const cfg = {
+                boundaries: {
+                    top: 0,
+                    bottom: cont.clientHeight,
+                    left: 0,
+                    right: cont.clientWidth
+                }
+            };
+            const fireworks = new Fireworks(cont, cfg);
+            let shownStupid = false;
+            let st = 0;
+            fast();
+            function fast() {
+                st++
+                if (st > 100000 && st < 300000) {
+                    fireworks.start();
+                    document.getElementById("counter").innerHTML = "100К";
+                    document.getElementById("counter").style.display = "block";
+                }
+                if (st > 300000) {
+                    st = 300000;
+                    document.getElementById("zizya").innerHTML = st;
+                    fireworks._acceleration = 1000;
+                    fireworks._delay.min = 1;
+                    fireworks._delay.max = 1;
+                    fireworks.start();
+                    document.getElementById("counter").innerHTML = "Ура!";
+                    document.getElementById("counter").style.display = "block";
                     return;
                 }
-                i++;
-                document.getElementById("zizya").innerHTML = i;
-                setTimeout(slow, 1000);
-            }
-            
-            function fast() {
-                i++;
-                document.getElementById("zizya").innerHTML = i;
+                document.getElementById("zizya").innerHTML = st;
                 setTimeout(fast, 1);
             }
             
-            function showCopyright() {
-                alert("If you're an owner of this song and against its publication, please contact me via:\n Email - imvidtu@outlook.com\n Discord - VidTu#4994");
+            function help(){
+                if (!shownStupid) {
+                    alert("За каждый клик будет добавлено 300 личностей.\n(патаму шта 300, а зизя сасет у трактариста хыххыхыхы)");
+                    shownStupid = true;
+                }
+                st += 300;
+            }
+            
+            function getRandomInt(max) {
+                return Math.floor(Math.random() * max);
             }
         </script>
     </body>
